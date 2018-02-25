@@ -1,0 +1,53 @@
+%header
+  %h1= npc.name
+  %p= "#{npc.race} #{npc['class']}"
+
+%main
+  %aside
+    .attributes
+      .attribute
+        .attribute-label Armor Class
+        .attribute-value= npc.ac
+      .attribute
+        .attribute-label Hit Points
+        .attribute-value= npc.hp
+      .attribute
+        .attribute-label Speed
+        .attribute-value= npc.speed
+    %table.stats
+      %thead
+        %tr
+          - %w(str dex con int wis cha).each do |stat|
+            %th= stat.upcase
+      %tbody
+        %tr
+          - %w(str dex con int wis cha).each do |stat|
+            - modifier = (npc.send(stat) - 10) / 2
+            - modifies = modifier > 0 ? "+ #{modifier}" : modifier
+            %td= "#{npc.send(stat)} (#{modifier})"
+    .tidbits
+      .tidbit
+        .tidbit-label Saving throws
+        .tidbit-value= npc.saving_throws
+      .tidbit
+        .tidbit-label Skills
+        .tidbit-value= npc.skills
+      .tidbit
+        .tidbit-label Damage Resistances
+        .tidbit-value= npc.dmg_resistances
+      .tidbit
+        .tidbit-label Damage Inmunities
+        .tidbit-value= npc.dmg_inmunities
+      .tidbit
+        .tidbit-label Senses
+        .tidbit-value= npc.senses
+      .tidbit
+        .tidbit-label Languages
+        .tidbit-value= npc.languages.join(', ')
+    .benefits
+    .actions
+
+  %article
+    %h2 Their part in the story
+    %p= Kramdown::Document.new(npc.their_part_in_the_story).to_html
+

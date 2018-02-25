@@ -1,0 +1,3 @@
+%h1= campaign.name
+- campaign.npcs.each do |npc|
+  %a{href: "#{campaign.slug}/#{npc.slug}.html"}= npc.name
